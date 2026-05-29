@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ApplicationPackage Name="PipePanel"
+                    ProductType="Application"
+                    AutodeskProduct="AutoCAD"
+                    Version="1.0.0"
+                    ProductCode="{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}">
+
+  <CompanyDetails Name="Custom"/>
+
+  <Components Description="PipePanel">
+    <RuntimeRequirements OS="Win64"
+                         Platform="AutoCAD"
+                         SeriesMin="R23.0"
+                         SeriesMax="R25.0"/>
+    <ComponentEntry AppName="PipePanel"
+                    ModuleName="./Contents/PipePanel.dll"
+                    AppDescription="Pipe Panel palette for diameter and system selection"/>
+  </Components>
+
+</ApplicationPackage>
