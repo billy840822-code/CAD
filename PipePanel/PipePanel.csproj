@@ -13,29 +13,30 @@
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
 
-  <!--
-    AutoCAD 2020 (R23.1) default install path.
-    Adjust if AutoCAD is installed in a non-default location.
-  -->
-  <PropertyGroup>
-    <AcadDir>C:\Program Files\Autodesk\AutoCAD 2020</AcadDir>
-  </PropertyGroup>
-
   <ItemGroup>
-    <Reference Include="acmgd">
-      <HintPath>$(AcadDir)\acmgd.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="acdbmgd">
-      <HintPath>$(AcadDir)\acdbmgd.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="accoremgd">
-      <HintPath>$(AcadDir)\accoremgd.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
+    <!--
+      AutoCAD 2020 = R23.1
+      AutoCAD.NET.Model  covers acmgd.dll + acdbmgd.dll
+      AutoCAD.NET.Core   covers accoremgd.dll
+      ExcludeAssets=runtime: do NOT copy into output (AutoCAD loads them at runtime)
+    -->
+    <PackageReference Include="AutoCAD.NET.Model" Version="23.1.0">
+      <ExcludeAssets>runtime</ExcludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="AutoCAD.NET.Core" Version="23.1.0">
+      <ExcludeAssets>runtime</ExcludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+
+    <!--
+      AcWindows.dll (PaletteSet) is NOT on NuGet.
+      Place a copy from your AutoCAD 2020 install into libs/AcWindows.dll
+      and push to GitHub so Actions can find it.
+      Local path: C:\Program Files\Autodesk\AutoCAD 2020\AcWindows.dll
+    -->
     <Reference Include="AcWindows">
-      <HintPath>$(AcadDir)\AcWindows.dll</HintPath>
+      <HintPath>libs/AcWindows.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>

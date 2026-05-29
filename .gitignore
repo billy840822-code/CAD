@@ -1,0 +1,9 @@
+# Build output
+bin/
+obj/
+*.user
+
+# AutoCAD DLLs (do not commit — licensing)
+# To build on GitHub Actions, force-add AcWindows.dll:
+#   git add -f PipePanel/libs/AcWindows.dll
+PipePanel/libs/AcWindows.dll

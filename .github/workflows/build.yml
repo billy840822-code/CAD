@@ -1,0 +1,43 @@
+name: Build PipePanel DLL
+
+on:
+  push:
+    branches: [ main, claude/vibrant-thompson-dHpUF ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Restore NuGet packages
+        run: dotnet restore PipePanel/PipePanel.csproj
+
+      - name: Build
+        run: dotnet build PipePanel/PipePanel.csproj -c Release -p:Platform=x64 --no-restore
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PipePanel-DLL
+          path: PipePanel/bin/x64/Release/net472/PipePanel.dll
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: "Build #${{ github.run_number }}"
+          files: PipePanel/bin/x64/Release/net472/PipePanel.dll
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
